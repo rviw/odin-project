@@ -1,6 +1,13 @@
 const container = document.querySelector('.grid-container');
 const button = document.getElementById('resize-button');
 
+function getRandomColor() {
+    const r = Math.floor(Math.random() * 256); // 0~255
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
 function createGrid(squaresPerSide) {
     container.innerHTML = '';
 
@@ -13,7 +20,7 @@ function createGrid(squaresPerSide) {
         square.style.flex = `1 0 calc(100% / ${squaresPerSide})`;
 
         square.addEventListener('mouseenter', () => {
-            square.style.backgroundColor = 'blue';
+            square.style.backgroundColor = getRandomColor();
         });
 
         container.appendChild(square);
