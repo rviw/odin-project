@@ -19,8 +19,15 @@ function createGrid(squaresPerSide) {
 
         square.style.flex = `1 0 calc(100% / ${squaresPerSide})`;
 
+        const baseColor = getRandomColor();
+
         square.addEventListener('mouseenter', () => {
-            square.style.backgroundColor = getRandomColor();
+            let currentOpacity = parseFloat(square.style.opacity) || 0;
+            if (currentOpacity < 1) {
+                currentOpacity += 0.1;
+                square.style.opacity = currentOpacity;
+                square.style.backgroundColor = baseColor;
+            }
         });
 
         container.appendChild(square);
