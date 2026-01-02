@@ -1,0 +1,15 @@
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80vh;
+    height: 80vh;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+.grid-square {
+    flex: 1 0 calc(100% / 16);
+    aspect-ratio: 1;
+    border: 1px solid blue;
+    box-sizing: border-box;
+}
