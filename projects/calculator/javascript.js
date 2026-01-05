@@ -19,13 +19,13 @@ function operate(operator, num1, num2) {
         case "+":
             return add(num1, num2);
 
-        case "-":
+        case "−":
             return subtract(num1, num2);
 
-        case "*":
+        case "×":
             return multiply(num1, num2);
 
-        case "/":
+        case "÷":
             return divide(num1, num2);
     }
 }
@@ -50,6 +50,43 @@ function appendDigit(digit) {
     updateDisplay();
 }
 
+function handleOperator(nextOperator) {
+    const inputValue = parseFloat(displayValue);
+
+    if (currentOperator && waitingForSecondOperand) {
+        currentOperator = nextOperator;
+        return;
+    }
+
+    if (firstOperand === null) {
+        firstOperand = inputValue;
+    } else if (currentOperator) {
+        const result = operate(currentOperator, firstOperand, inputValue);
+        displayValue = String(Math.round(result * 10**5) / 10**5);
+        firstOperand = result;
+    }
+
+    currentOperator = nextOperator;
+    waitingForSecondOperand = true;
+    updateDisplay();
+}
+
+function handleEquals() {
+    if (currentOperator === null || waitingForSecondOperand) return;
+
+    const inputValue = parseFloat(displayValue);
+    const result = operate(currentOperator, firstOperand, inputValue);
+
+    displayValue = inputValue === 0 && currentOperator === "÷"
+                   ? "ERR"
+                   : String(Math.round(result * 10**5) / 10**5);
+
+    firstOperand = result;
+    currentOperator = null;
+    waitingForSecondOperand = false;
+    updateDisplay();
+}
+
 const MAX_DIGITS = 10;
 
 let displayValue = "0";
@@ -60,4 +97,13 @@ let waitingForSecondOperand = false;
 
 document.querySelectorAll(".numbers button").forEach(btn => {
     btn.addEventListener("click", () => appendDigit(btn.textContent));
+});
+
+document.querySelectorAll(".operators button").forEach(btn => {
+    const op = btn.textContent;
+    if (op === "=") {
+        btn.addEventListener("click", handleEquals);
+    } else {
+        btn.addEventListener("click", () => handleOperator(op));
+    }
 });
