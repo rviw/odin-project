@@ -1,3 +1,11 @@
+const MAX_DIGITS = 10;
+
+let displayValue = "0";
+let firstOperand = null;
+let secondOperand = null;
+let currentOperator = null;
+let waitingForSecondOperand = false;
+
 function add(a, b) {
     return a + b;
 }
@@ -42,12 +50,28 @@ function appendDigit(digit) {
         displayValue = digit;
         waitingForSecondOperand = false;
     } else {
-        displayValue = displayValue === "0" ? digit : displayValue + digit;
-    }
-    if (displayValue.length > MAX_DIGITS) {
-        displayValue = "ERR";
+        const sanitized = displayValue.replace(".", "");
+        if (sanitized.length < MAX_DIGITS) {
+            displayValue = displayValue === "0" ? digit : displayValue + digit;
+        }
     }
     updateDisplay();
+}
+
+function addFloatingPoint() {
+    if (displayValue === "ERR") return;
+
+    if (waitingForSecondOperand) {
+        displayValue = "0.";
+        waitingForSecondOperand = false;
+        updateDisplay();
+        return;
+    }
+
+    if (!displayValue.includes(".")) {
+        displayValue += ".";
+        updateDisplay();
+    }
 }
 
 function handleOperator(nextOperator) {
@@ -62,8 +86,8 @@ function handleOperator(nextOperator) {
         firstOperand = inputValue;
     } else if (currentOperator) {
         const result = operate(currentOperator, firstOperand, inputValue);
-        displayValue = String(Math.round(result * 10**5) / 10**5);
-        firstOperand = result;
+        displayValue = formatResult(result);
+        firstOperand = displayValue === "ERR" ? null : result;
     }
 
     currentOperator = nextOperator;
@@ -75,16 +99,30 @@ function handleEquals() {
     if (currentOperator === null || waitingForSecondOperand) return;
 
     const inputValue = parseFloat(displayValue);
-    const result = operate(currentOperator, firstOperand, inputValue);
 
-    displayValue = inputValue === 0 && currentOperator === "÷"
-                   ? "ERR"
-                   : String(Math.round(result * 10**5) / 10**5);
+    if (currentOperator === "÷" && inputValue === 0) {
+        displayValue = "ERR";
+    } else {
+        const result = operate(currentOperator, firstOperand, inputValue);
+        displayValue = formatResult(result);
+        firstOperand = displayValue === "ERR" ? null : result;
+    }
 
-    firstOperand = result;
     currentOperator = null;
     waitingForSecondOperand = false;
     updateDisplay();
+}
+
+function formatResult(value) {
+    const [intPart, decPart] = String(value).split(".");
+    if (intPart.length > MAX_DIGITS) return "ERR";
+
+    if (decPart) {
+        const allowedDecimals = MAX_DIGITS - intPart.length;
+        return Number(value.toFixed(allowedDecimals)).toString();
+    }
+    
+    return String(value);
 }
 
 function backspace() {
@@ -106,30 +144,6 @@ function clearCalculator() {
     updateDisplay();
 }
 
-function addFloatingPoint() {
-    if (displayValue === "ERR") return;
-
-    if (waitingForSecondOperand) {
-        displayValue = "0.";
-        waitingForSecondOperand = false;
-        updateDisplay();
-        return;
-    }
-
-    if (!displayValue.includes(".")) {
-        displayValue += ".";
-        updateDisplay();
-    }
-}
-
-const MAX_DIGITS = 10;
-
-let displayValue = "0";
-let firstOperand = null;
-let secondOperand = null;
-let currentOperator = null;
-let waitingForSecondOperand = false;
-
 document.querySelectorAll(".numbers button").forEach(btn => {
     btn.addEventListener("click", () => appendDigit(btn.textContent));
 });
@@ -144,7 +158,5 @@ document.querySelectorAll(".operators button").forEach(btn => {
 });
 
 document.querySelector(".menu button:first-child").addEventListener("click", backspace);
-
 document.querySelector(".menu button:nth-child(2)").addEventListener("click", clearCalculator);
-
 document.querySelector(".menu button:last-child").addEventListener("click", addFloatingPoint);
