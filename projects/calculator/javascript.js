@@ -106,6 +106,22 @@ function clearCalculator() {
     updateDisplay();
 }
 
+function addFloatingPoint() {
+    if (displayValue === "ERR") return;
+
+    if (waitingForSecondOperand) {
+        displayValue = "0.";
+        waitingForSecondOperand = false;
+        updateDisplay();
+        return;
+    }
+
+    if (!displayValue.includes(".")) {
+        displayValue += ".";
+        updateDisplay();
+    }
+}
+
 const MAX_DIGITS = 10;
 
 let displayValue = "0";
@@ -130,3 +146,5 @@ document.querySelectorAll(".operators button").forEach(btn => {
 document.querySelector(".menu button:first-child").addEventListener("click", backspace);
 
 document.querySelector(".menu button:nth-child(2)").addEventListener("click", clearCalculator);
+
+document.querySelector(".menu button:last-child").addEventListener("click", addFloatingPoint);
