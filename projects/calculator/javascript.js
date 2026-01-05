@@ -87,6 +87,17 @@ function handleEquals() {
     updateDisplay();
 }
 
+function backspace() {
+    if (displayValue === "ERR") {
+        displayValue = "0";
+    } else if (displayValue.length === 1) {
+        displayValue = "0";
+    } else {
+        displayValue = displayValue.slice(0, -1);
+    }
+    updateDisplay();
+}
+
 function clearCalculator() {
     displayValue = "0";
     firstOperand = null;
@@ -115,5 +126,7 @@ document.querySelectorAll(".operators button").forEach(btn => {
         btn.addEventListener("click", () => handleOperator(op));
     }
 });
+
+document.querySelector(".menu button:first-child").addEventListener("click", backspace);
 
 document.querySelector(".menu button:nth-child(2)").addEventListener("click", clearCalculator);
