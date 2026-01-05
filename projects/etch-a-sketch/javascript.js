@@ -1,5 +1,5 @@
-const container = document.querySelector('.grid-container');
-const button = document.getElementById('resize-button');
+const container = document.querySelector(".grid-container");
+const button = document.getElementById("resize-button");
 
 function getRandomColor() {
     const r = Math.floor(Math.random() * 256); // 0~255
@@ -9,19 +9,19 @@ function getRandomColor() {
 }
 
 function createGrid(squaresPerSide) {
-    container.innerHTML = '';
+    container.innerHTML = "";
 
     const totalSquares = squaresPerSide * squaresPerSide;
 
     for (let i = 0; i < totalSquares; i++) {
-        const square = document.createElement('div');
-        square.classList.add('grid-square');
+        const square = document.createElement("div");
+        square.classList.add("grid-square");
 
         square.style.flex = `1 0 calc(100% / ${squaresPerSide})`;
 
         const baseColor = getRandomColor();
 
-        square.addEventListener('mouseenter', () => {
+        square.addEventListener("mouseenter", () => {
             let currentOpacity = parseFloat(square.style.opacity) || 0;
             if (currentOpacity < 1) {
                 currentOpacity += 0.1;
@@ -36,7 +36,7 @@ function createGrid(squaresPerSide) {
 
 createGrid(16);
 
-button.addEventListener('click', () => {
+button.addEventListener("click", () => {
     let squaresPerSide = prompt("Enter number of squares per side (max 100):");
 
     squaresPerSide = parseInt(squaresPerSide);
