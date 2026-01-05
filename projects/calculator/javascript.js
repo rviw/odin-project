@@ -2,9 +2,9 @@ const MAX_DIGITS = 10;
 
 let displayValue = "0";
 let firstOperand = null;
-let secondOperand = null;
 let currentOperator = null;
 let waitingForSecondOperand = false;
+let justCalculated = false;
 
 function add(a, b) {
     return a + b;
@@ -39,16 +39,16 @@ function operate(operator, num1, num2) {
 }
 
 function updateDisplay() {
-    const display = document.querySelector(".display");
-    display.textContent = displayValue;
+    document.querySelector(".display").textContent = displayValue;
 }
 
 function appendDigit(digit) {
     if (displayValue === "ERR") return;
 
-    if (waitingForSecondOperand) {
+    if (waitingForSecondOperand || justCalculated) {
         displayValue = digit;
         waitingForSecondOperand = false;
+        justCalculated = false;
     } else {
         const sanitized = displayValue.replace(".", "");
         if (sanitized.length < MAX_DIGITS) {
@@ -61,9 +61,10 @@ function appendDigit(digit) {
 function addFloatingPoint() {
     if (displayValue === "ERR") return;
 
-    if (waitingForSecondOperand) {
+    if (waitingForSecondOperand || justCalculated) {
         displayValue = "0.";
         waitingForSecondOperand = false;
+        justCalculated = false;
         updateDisplay();
         return;
     }
@@ -77,17 +78,13 @@ function addFloatingPoint() {
 function handleOperator(nextOperator) {
     const inputValue = parseFloat(displayValue);
 
-    if (currentOperator && waitingForSecondOperand) {
-        currentOperator = nextOperator;
-        return;
-    }
-
-    if (firstOperand === null) {
-        firstOperand = inputValue;
-    } else if (currentOperator) {
+    if (currentOperator && !waitingForSecondOperand) {
         const result = operate(currentOperator, firstOperand, inputValue);
         displayValue = formatResult(result);
         firstOperand = displayValue === "ERR" ? null : result;
+        justCalculated = true;
+    } else if (firstOperand === null) {
+        firstOperand = inputValue;
     }
 
     currentOperator = nextOperator;
@@ -102,6 +99,7 @@ function handleEquals() {
 
     if (currentOperator === "÷" && inputValue === 0) {
         displayValue = "ERR";
+        firstOperand = null;
     } else {
         const result = operate(currentOperator, firstOperand, inputValue);
         displayValue = formatResult(result);
@@ -110,6 +108,7 @@ function handleEquals() {
 
     currentOperator = null;
     waitingForSecondOperand = false;
+    justCalculated = true;
     updateDisplay();
 }
 
@@ -128,8 +127,9 @@ function formatResult(value) {
 function backspace() {
     if (displayValue === "ERR") {
         displayValue = "0";
-    } else if (displayValue.length === 1) {
+    } else if (displayValue.length === 1 || justCalculated) {
         displayValue = "0";
+        justCalculated = false;
     } else {
         displayValue = displayValue.slice(0, -1);
     }
@@ -141,6 +141,7 @@ function clearCalculator() {
     firstOperand = null;
     currentOperator = null;
     waitingForSecondOperand = false;
+    justCalculated = false;
     updateDisplay();
 }
 
