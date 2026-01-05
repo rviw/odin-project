@@ -87,6 +87,14 @@ function handleEquals() {
     updateDisplay();
 }
 
+function clearCalculator() {
+    displayValue = "0";
+    firstOperand = null;
+    currentOperator = null;
+    waitingForSecondOperand = false;
+    updateDisplay();
+}
+
 const MAX_DIGITS = 10;
 
 let displayValue = "0";
@@ -107,3 +115,5 @@ document.querySelectorAll(".operators button").forEach(btn => {
         btn.addEventListener("click", () => handleOperator(op));
     }
 });
+
+document.querySelector(".menu button:nth-child(2)").addEventListener("click", clearCalculator);
