@@ -77,7 +77,7 @@ button {
     border-radius: 50%;
     border: none;
     background: rgb(73, 73, 73);
-    font-size: 3vh;
+    font-size: 3.5vh;
     line-height: 1;
     color: rgb(222, 222, 222);
     display: flex;
@@ -88,11 +88,13 @@ button {
 
 .menu button {
     background: rgb(116, 116, 116);
+    font-size: 2.2vh;
 }
 
 .operators button {
     background: rgb(255, 146, 0);
     padding: 0 .2vh .6vh 0;
+    font-size: 4vh;
 }
 
 button:active {
