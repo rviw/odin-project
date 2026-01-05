@@ -16,22 +16,48 @@ function divide(a, b) {
 
 function operate(operator, num1, num2) {
     switch (operator) {
-        case '+':
+        case "+":
             return add(num1, num2);
 
-        case '-':
+        case "-":
             return subtract(num1, num2);
 
-        case '*':
+        case "*":
             return multiply(num1, num2);
 
-        case '/':
+        case "/":
             return divide(num1, num2);
     }
 }
 
-let num1 = 1;
-let num2 = 3;
-let operator = '/';
+function updateDisplay() {
+    const display = document.querySelector(".display");
+    display.textContent = displayValue;
+}
 
-console.log(operate(operator, num1, num2));
+function appendDigit(digit) {
+    if (displayValue === "ERR") return;
+
+    if (waitingForSecondOperand) {
+        displayValue = digit;
+        waitingForSecondOperand = false;
+    } else {
+        displayValue = displayValue === "0" ? digit : displayValue + digit;
+    }
+    if (displayValue.length > MAX_DIGITS) {
+        displayValue = "ERR";
+    }
+    updateDisplay();
+}
+
+const MAX_DIGITS = 10;
+
+let displayValue = "0";
+let firstOperand = null;
+let secondOperand = null;
+let currentOperator = null;
+let waitingForSecondOperand = false;
+
+document.querySelectorAll(".numbers button").forEach(btn => {
+    btn.addEventListener("click", () => appendDigit(btn.textContent));
+});
