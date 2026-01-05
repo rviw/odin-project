@@ -24,6 +24,10 @@ function updateDisplay() {
     document.querySelector(".display").textContent = displayValue;
 }
 
+function setError() {
+    // TODO: Centralize all caclulator error handling into a single setError() function
+}
+
 function appendDigit(digit) {
     if (displayValue === "ERR") return;
 
@@ -102,6 +106,8 @@ function formatResult(value) {
         const allowedDecimals = MAX_DIGITS - intPart.length;
         return Number(value.toFixed(allowedDecimals)).toString();
     }
+
+    // TODO: Handle extreme operations resulting in NaN or Infinity (e.g., 0.0000000001 + 9999999999 not responding on "=")
     
     return String(value);
 }
@@ -143,3 +149,5 @@ document.querySelectorAll(".operators button").forEach(btn => {
 document.querySelector(".menu button:first-child").addEventListener("click", backspace);
 document.querySelector(".menu button:nth-child(2)").addEventListener("click", clearCalculator);
 document.querySelector(".menu button:last-child").addEventListener("click", addFloatingPoint);
+
+// TODO: Add keyboard support
