@@ -1,5 +1,12 @@
 const MAX_DIGITS = 10;
 
+const KEY_OPERATOR_MAP = {
+    "+": "+",
+    "-": "−",
+    "*": "×",
+    "/": "÷"
+}
+
 let displayValue = "0";
 let firstOperand = null;
 let currentOperator = null;
@@ -167,4 +174,36 @@ document.querySelector(".menu button:first-child").addEventListener("click", bac
 document.querySelector(".menu button:nth-child(2)").addEventListener("click", clearCalculator);
 document.querySelector(".menu button:last-child").addEventListener("click", addFloatingPoint);
 
-// TODO: Add keyboard support
+document.addEventListener("keydown", (e) => {
+    const key = e.key;
+
+    if (key >= "0" && key <= "9") {
+        appendDigit(key);
+        return;
+    }
+
+    if (key === ".") {
+        addFloatingPoint();
+        return;
+    }
+
+    if (key in KEY_OPERATOR_MAP) {
+        handleOperator(KEY_OPERATOR_MAP[key]);
+        return;
+    }
+
+    if (key === "Enter" || key === "=") {
+        e.preventDefault();
+        handleEquals();
+        return;
+    }
+
+    if (key === "Backspace") {
+        backspace();
+        return;
+    }
+
+    if (key === "Escape") {
+        clearCalculator();
+    }
+});
