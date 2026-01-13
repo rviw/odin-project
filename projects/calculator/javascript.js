@@ -25,7 +25,12 @@ function updateDisplay() {
 }
 
 function setError() {
-    // TODO: Centralize all caclulator error handling into a single setError() function
+    displayValue = "ERR";
+    firstOperand = null;
+    currentOperator = null;
+    waitingForSecondOperand = false;
+    justCalculated = false;
+    updateDisplay();
 }
 
 function appendDigit(digit) {
@@ -61,13 +66,31 @@ function addFloatingPoint() {
     }
 }
 
+function calculate(secondOperand) {
+    const result = operate(currentOperator, firstOperand, secondOperand);
+
+    if (!Number.isFinite(result)) {
+        setError();
+        return null;
+    }
+
+    const formatted = formatResult(result);
+    if (formatted == "ERR") {
+        setError();
+        return null;
+    }
+
+    displayValue = formatted;
+    return result;
+}
+
 function handleOperator(nextOperator) {
     const inputValue = parseFloat(displayValue);
 
     if (currentOperator && !waitingForSecondOperand) {
-        const result = operate(currentOperator, firstOperand, inputValue);
-        displayValue = formatResult(result);
-        firstOperand = displayValue === "ERR" ? null : result;
+        const result = calculate(inputValue);
+        if (result === null) return;
+        firstOperand = result;
         justCalculated = true;
     } else if (firstOperand === null) {
         firstOperand = inputValue;
@@ -82,16 +105,10 @@ function handleEquals() {
     if (currentOperator === null || waitingForSecondOperand) return;
 
     const inputValue = parseFloat(displayValue);
+    const result = calculate(inputValue);
+    if (result === null) return;
 
-    if (currentOperator === "÷" && inputValue === 0) {
-        displayValue = "ERR";
-        firstOperand = null;
-    } else {
-        const result = operate(currentOperator, firstOperand, inputValue);
-        displayValue = formatResult(result);
-        firstOperand = displayValue === "ERR" ? null : result;
-    }
-
+    firstOperand = result;
     currentOperator = null;
     waitingForSecondOperand = false;
     justCalculated = true;
@@ -100,14 +117,14 @@ function handleEquals() {
 
 function formatResult(value) {
     const [intPart, decPart] = String(value).split(".");
+
+    if (intPart.length >= MAX_DIGITS && decPart) return "ERR";
     if (intPart.length > MAX_DIGITS) return "ERR";
 
     if (decPart) {
         const allowedDecimals = MAX_DIGITS - intPart.length;
         return Number(value.toFixed(allowedDecimals)).toString();
     }
-
-    // TODO: Handle extreme operations resulting in NaN or Infinity (e.g., 0.0000000001 + 9999999999 not responding on "=")
     
     return String(value);
 }
