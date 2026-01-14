@@ -30,7 +30,7 @@ p {
 }
 
 .sidebar {
-    width: 35%;
+    width: 30%;
     min-height: 100vh;
 
     background-image: url("https://images.unsplash.com/photo-1528155124528-06c125d81e89");
@@ -43,6 +43,8 @@ p {
     justify-content: space-between;
     align-items: center;
 
+    position: relative;
+
     color: white;
 }
 
@@ -50,15 +52,45 @@ p {
     color: white;
 }
 
+.back-link {
+    align-self: flex-start;
+    font-size: small;
+    padding: .5rem;
+}
+
 .logo {
+    position: absolute;
+    top: 20%;
+    width: 100%;
+}
+
+.logo-bg {
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    padding: 2rem;
+    width: 100%;
 
+    gap: 1rem;
+    
+    padding: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+.logo img {
+    height: 4em;
+    width: auto;
+}
+
+.logo span {
     font-family: "Bodoni Moda", serif;
     font-optical-sizing: auto;
     font-weight: 600;
     font-style: normal;
+    font-size: 2.5rem;
+    letter-spacing: 0.1em;
+}
+
+.credit {
+    padding-bottom: 1rem;
+    font-size: clamp(0.5rem, 1vw, 0.75rem);
 }
