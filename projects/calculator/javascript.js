@@ -157,6 +157,18 @@ function clearCalculator() {
     updateDisplay();
 }
 
+function activateButton(key) {
+    const btn = document.querySelector(`button[data-key="${key}"]`);
+    if (!btn) return;
+    btn.classList.add("active");
+}
+
+function deactivateButton(key) {
+    const btn = document.querySelector(`button[data-key="${key}"]`);
+    if (!btn) return;
+    btn.classList.remove("active");
+}
+
 document.querySelectorAll(".numbers button").forEach(btn => {
     btn.addEventListener("click", () => appendDigit(btn.textContent));
 });
@@ -179,31 +191,45 @@ document.addEventListener("keydown", (e) => {
 
     if (key >= "0" && key <= "9") {
         appendDigit(key);
+        activateButton(key);
         return;
     }
 
     if (key === ".") {
         addFloatingPoint();
+        activateButton(key);
         return;
     }
 
     if (key in KEY_OPERATOR_MAP) {
         handleOperator(KEY_OPERATOR_MAP[key]);
+        activateButton(key);
         return;
     }
 
     if (key === "Enter" || key === "=") {
         e.preventDefault();
         handleEquals();
+        activateButton("Enter");
         return;
     }
 
     if (key === "Backspace") {
         backspace();
+        activateButton(key);
         return;
     }
 
     if (key === "Escape") {
         clearCalculator();
+        activateButton(key);
+    }
+});
+
+document.addEventListener("keyup", (e) => {
+    if (e.key === "=") {
+        deactivateButton("Enter");
+    } else {
+        deactivateButton(e.key);
     }
 });
