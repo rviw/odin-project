@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap');
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+*:not(dialog) {
+    margin: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+input, button, textarea, select {
+    font: inherit;
+}
+
+p {
+    overflow-wrap: break-word;
+    text-wrap: pretty;
+}
+
+.sidebar {
+    width: 35%;
+    min-height: 100vh;
+
+    background-image: url("https://images.unsplash.com/photo-1528155124528-06c125d81e89");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    color: white;
+}
+
+.sidebar a {
+    color: white;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    padding: 2rem;
+
+    font-family: "Bodoni Moda", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
