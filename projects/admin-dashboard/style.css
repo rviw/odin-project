@@ -38,6 +38,25 @@ body {
 
 .header {
     background-color: white;
+    padding: 1.5rem 2.5rem;
+
+    display: grid;
+    gap: 1.25rem;
+}
+
+.header-top,
+.header-bottom {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.search,
+.user,
+.greeting,
+.actions {
+    border: 1px solid black;
 }
 
 .main-content {
