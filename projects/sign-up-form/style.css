@@ -8,10 +8,18 @@
     margin: 0;
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
+    height: 100vh;
+    overflow: hidden;
+
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+
     display: flex;
 }
 
@@ -30,8 +38,8 @@ p {
 }
 
 .sidebar {
-    width: 30%;
-    min-height: 100vh;
+    flex: 0 0 30%;
+    height: 100%;
 
     background-image: url("https://images.unsplash.com/photo-1528155124528-06c125d81e89");
     background-size: cover;
@@ -93,4 +101,94 @@ p {
 .credit {
     padding-bottom: 1rem;
     font-size: clamp(0.5rem, 1vw, 0.75rem);
+}
+
+main {
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    background: whitesmoke;
+}
+
+.intro {
+    max-width: 700px;
+    margin: 5rem 3.5rem 2.5rem 3.5rem;
+}
+
+.intro p:last-child {
+    margin-top: 1rem;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-card {
+    width: 100%;
+    background: white;
+    padding: 1.5rem 3.5rem 2rem;
+}
+
+.form-card .form-title {
+    margin: 0 0 1rem 0;
+}
+
+.form-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem 3rem;
+
+    max-width: 640px;
+    width: 100%;
+}
+
+.form-grid .field {
+    min-width: 0;
+    flex: 1 1 240px;
+    display: flex;
+    flex-direction: column;
+}
+
+.actions,
+.login-link {
+    padding-left: 3.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.actions {
+    margin-top: 2rem;
+}
+
+
+input {
+    border: 1px solid #E5E7EB;
+}
+
+input:focus {
+    outline: none;
+    border-color: blue;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+input[type="password"]:invalid {
+    border-color: red;
+}
+
+button {
+    border: none;
+    background-color: #299b74;
+    color: white;
+    font-weight: bold;
+    padding: .5em 2em;
+}
+
+.login-link a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #299b74;
 }
