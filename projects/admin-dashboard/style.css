@@ -187,7 +187,7 @@ body {
     padding: 2rem;
 
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: minmax(250px, 1fr) 300px;
     gap: 2rem;
 }
 
@@ -245,7 +245,29 @@ body {
     place-items: center;
 }
 
-.announcements,
+.panel {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+    padding: 1.5rem;
+}
+
+.announcement h3 {
+    font-size: 0.9rem;
+}
+
+.announcement p {
+    margin: 0.4rem 0;
+    font-size: 0.75rem;
+    color: dimgray;
+}
+
+.announcement + .announcement {
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    margin-top: 1rem;
+    padding-top: 1rem;
+}
+
 .trending {
     background-color: lightslategray;
 }
