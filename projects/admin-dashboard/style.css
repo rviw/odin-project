@@ -15,7 +15,7 @@ body {
 .dashboard {
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: 240px 1fr;
     grid-template-rows: auto 1fr;
 }
 
@@ -38,10 +38,12 @@ body {
 
 .header {
     background-color: white;
-    padding: 1.5rem 2.5rem;
+    padding: 1.5rem 2rem;
 
     display: grid;
     gap: 1.25rem;
+
+    font-size: 0.9rem;
 }
 
 .header-top,
@@ -54,6 +56,10 @@ body {
 
 .search input {
     width: 100%;
+
+    border: none;
+    border-radius: 1rem;
+    background-color: lightblue;
     padding: 0.5rem 0.75rem;
 }
 
@@ -73,11 +79,26 @@ body {
     height: 50px;
 }
 
-.user,
-.actions {
+.user {
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.actions button {
+    border: none;
+    border-radius: 3em;
+    padding: 0.8em 1.9em;
+
+    background-color: royalblue;
+    color: white;
+    font-weight: 600;
 }
 
 .greeting {
@@ -98,11 +119,9 @@ body {
     margin: 0;
 }
 
-.search,
-.user,
-.greeting,
-.actions {
-    border: 1px solid black;
+.greeting-main {
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 
 .main-content {
