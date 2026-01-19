@@ -191,13 +191,42 @@ body {
 }
 
 .project-card {
-    background-color: white;
+    position: relative;
+    overflow: hidden;
+
     padding: 1.5rem;
+    padding-left: 1.75rem;
+
+    background-color: white;
     border-radius: 0.75rem;
 
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+}
+
+.project-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 8px;
+    height: 100%;
+    background: gold;
+}
+
+.card-actions {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.card-actions .icon-button {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
 }
 
 .projects,
