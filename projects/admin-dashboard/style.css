@@ -26,7 +26,7 @@ body {
 .dashboard {
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 270px 1fr;
     grid-template-rows: auto 1fr;
 }
 
@@ -44,23 +44,32 @@ body {
 .nav {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1.1rem;
+    margin-left: 0.75rem;
 }
 
 .sidebar .logo {
     display: grid;
-    grid-template-columns: 32px 1fr;
+    grid-template-columns: 40px 1fr;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
 
     font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.sidebar .nav a:hover {
+    color: gold;
 }
 
 .sidebar .nav a {
     display: grid;
     grid-template-columns: 20px 1fr;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1rem;
+
+    font-size: 1.1rem;
+    font-weight: 500;
 }
 
 .icon {
@@ -71,23 +80,27 @@ body {
 }
 
 .logo .icon {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
 }
 
 .header .icon {
     width: 24px;
-    height: 25px;
+    height: 24px;
 }
 
 .header {
     background-color: white;
-    padding: 1.5rem 2rem;
+    padding: 1rem 3.25rem 1.25rem 3.25rem;
 
     display: grid;
-    gap: 2rem;
+    gap: 1.75rem;
 
     font-size: 0.9rem;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 10;
 }
 
 .header-top,
@@ -95,10 +108,10 @@ body {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
-    gap: 1.5rem;
 }
 
 .search {
+    width: 70%;
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
@@ -106,7 +119,7 @@ body {
 }
 
 .search input {
-    width: 80%;
+    width: 100%;
 
     border: none;
     border-radius: 1rem;
@@ -115,14 +128,12 @@ body {
 }
 
 .profile-image {
-    background-color: royalblue;
-    border-radius: 50%;
     flex-shrink: 0;
 }
 
 .profile-image.small {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
 }
 
 .icon-button {
@@ -133,14 +144,20 @@ body {
 }
 
 .profile-image.large {
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
 }
 
 .user {
     display: flex;
     align-items: center;
     gap: 1.2rem;
+    margin-right: 1rem;
+}
+
+.username {
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .actions {
@@ -162,42 +179,42 @@ body {
 .greeting {
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto;
-    column-gap: 1.25rem;
-    row-gap: 0.25rem;
+    gap: 1.1rem;
     align-items: center;
 }
 
-.greeting .profile-image {
-    grid-row: 1 / 3;
-}
-
-.greeting-sub,
-.greeting-main {
-    margin: 0;
-}
-
-.greeting-main {
-    font-size: 1.1rem;
+.greeting-text {
+    display: grid;
+    gap: 0.2rem;
     font-weight: 600;
+}
+
+.greeting-sub {
+    font-size: 0.75rem;
+}
+
+.greeting-main {
+    font-size: 1.25rem;
 }
 
 .main-content {
     background-color: lightblue;
-    padding: 2rem;
+    padding: 1.75rem;
 
     display: grid;
-    grid-template-columns: minmax(250px, 1fr) 300px;
+    grid-template-columns: minmax(320px, 1fr) 280px;
     gap: 2rem;
 }
 
-.projects {
-    grid-row: 1 / 3;
+.side-panels {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
 }
 
@@ -205,7 +222,7 @@ body {
     position: relative;
     overflow: hidden;
 
-    padding: 1.5rem 1.5rem 1rem 2rem;
+    padding: 1.75rem 1.5rem 1.25rem 2rem;
 
     background-color: white;
     border-radius: 0.75rem;
@@ -229,6 +246,7 @@ body {
 .project-card p {
     font-size: 0.85em;
     color: dimgray;
+    margin-bottom: 2rem;
 }
 
 .card-actions {
@@ -249,16 +267,16 @@ body {
     background: white;
     border-radius: 0.75rem;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
-    padding: 1.5rem;
+    padding: 1.5em;
 }
 
 .announcement h3 {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 
 .announcement p {
-    margin: 0.4rem 0;
-    font-size: 0.75rem;
+    margin: 0.3rem 0;
+    font-size: 0.7rem;
     color: dimgray;
 }
 
@@ -278,7 +296,7 @@ body {
 .trending-item {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 0.85rem;
+    gap: 0.75rem;
     align-items: center;
 }
 
@@ -287,11 +305,11 @@ body {
 }
 
 .handle {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 500;
 }
 
 .project-name {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: dimgray;
 }
