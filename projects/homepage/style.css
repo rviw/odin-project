@@ -80,16 +80,17 @@ p {
 
 .site-header {
     position: relative;
-    padding: var(--space-5) 0;    
+    padding: var(--space-5) 0;
 }
 
 .site-header::before {
     content: "";
     position: absolute;
+    top: 0;
     left: 0;
-    bottom: 0;
     width: 100%;
-    height: 100%;
+    height: 450px;
+
     background: var(--teal);
 
     clip-path: polygon(
@@ -99,7 +100,7 @@ p {
         0 100%
     );
 
-    z-index: 0;
+    z-index: -1;
 }
 
 .work {
@@ -109,7 +110,8 @@ p {
 .contact {
     background: var(--teal);
     color: #fff;
-    padding: var(--space-5) var(--space-5) 0 var(--space-5);
+    padding: var(--space-5);
+    padding-bottom: 0;
 }
 
 .contact-text h2 {
@@ -121,10 +123,7 @@ p {
     color: #fff;
 }
 
-.header-grid {
-    position: relative;
-    z-index: 1;
-    
+.header-grid {    
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
@@ -140,12 +139,17 @@ p {
     box-shadow: var(--shadow);
 }
 
+.hero-photo-tablet {
+    display: none;
+}
+
 .hero-name {
     position: absolute;
-    left: var(--space-3);
-    bottom: var(--space-2);
+    left: 1.4rem;
+    bottom: 1rem;
     color: #fff;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
 }
 
 .about-card {
@@ -178,9 +182,13 @@ p {
 }
 
 .project-shot {
-    background-color:thistle;
-    padding: 3.5rem 1rem;
-    text-align: center;
+    background-color: var(--teal);
+
+    aspect-ratio: 16 / 9;
+    padding: 0;
+    display: grid;
+    place-items: center;
+
     font-size: 1.75rem;
     color: #fff;
 }
@@ -226,17 +234,12 @@ p {
 
 .contact-photo {
     width: 100%;
-    height: 640px;
+    height: min(640px, 60vh);
     object-fit: cover;
     object-position: center;
 }
 
 @media (min-width: 768px) {
-    .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--space-4);
-    }
-
     .contact {
         padding-bottom: var(--space-5);
     }
@@ -257,7 +260,45 @@ p {
 
     .contact-photo {
         height: 100%;
-        min-height: 100%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .hero-photo,
+    .social-row {
+        display: none;
+    }
+
+    .about-card {
+        display: flow-root;
+        position: relative;
+        max-width: 600px;
+        margin: 6rem auto 0;
+        padding: 3.5rem var(--space-4);
+    }
+
+    .hero-photo-tablet {
+        display: block;
+        float: left;
+
+        width: 280px;
+        height: 300px;
+        object-fit: cover;
+
+        box-shadow: var(--shadow);
+
+        margin: -150px 25px 20px -72px;
+    }
+    
+    .hero-name {
+        inset: 2.5rem auto auto 5rem;
+        font-size: 3rem;
+        z-index: 1;
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-4);
     }
 }
 
@@ -288,7 +329,7 @@ p {
 
     .hero-name {
         left: auto;
-        right: var(--space-3);
+        right: 1.2rem;
     }
 
     .about-card {
