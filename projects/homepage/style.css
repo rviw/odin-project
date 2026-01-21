@@ -10,8 +10,8 @@
     --paper: #ffffff;
     --bg: #f6f6f6;
 
-    --teal: #0e8aa3;
-    --shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    --teal: teal;
+    --shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 6px 6px;
 
     --space-1: 0.5rem;
     --space-2: 1rem;
@@ -79,18 +79,41 @@ p {
 }
 
 .site-header {
+    position: relative;
+    padding: var(--space-5) 0;    
+}
+
+.site-header::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
     background: var(--teal);
-    padding: var(--space-3) 0;
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        100% 50%,
+        0 100%
+    );
+
+    z-index: 0;
 }
 
 .work {
-    padding: var(--space-5) 0;
+    padding: var(--space-5) var(--space-3);
 }
 
 .contact {
     background: var(--teal);
     color: #fff;
-    padding-top: var(--space-4);
+    padding: var(--space-5) var(--space-5) 0 var(--space-5);
+}
+
+.contact-text h2 {
+    margin-bottom: var(--space-2);
 }
 
 .contact p,
@@ -99,6 +122,9 @@ p {
 }
 
 .header-grid {
+    position: relative;
+    z-index: 1;
+    
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
@@ -116,7 +142,7 @@ p {
 
 .hero-name {
     position: absolute;
-    left: var(--space-2);
+    left: var(--space-3);
     bottom: var(--space-2);
     color: #fff;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
@@ -211,10 +237,13 @@ p {
         gap: var(--space-4);
     }
 
+    .contact {
+        padding-bottom: var(--space-5);
+    }
+
     .contact-grid {
         flex-direction: row;
         align-items: stretch;
-        padding-bottom: var(--space-4);
     }
 
     .contact-text {
@@ -229,5 +258,49 @@ p {
     .contact-photo {
         height: 100%;
         min-height: 100%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .projects-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .header-grid {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-5);
+    }
+
+    .hero-media {
+        width: 380px;
+        flex: 0 0 auto;
+        z-index: 1;
+    }
+
+    .hero-photo {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .hero-name {
+        left: auto;
+        right: var(--space-3);
+    }
+
+    .about-card {
+        display: flex;
+        flex-direction: column;
+
+        max-width: 500px;
+        flex: 1;
+        transform: translateX(-55px);
+    }
+
+    .social-row {
+        align-self: flex-end;
     }
 }
