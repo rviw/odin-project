@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 *,
 *::before,
 *::after {
@@ -62,16 +64,21 @@ h1 {
     font-size: 2.25rem;
     line-height: 1.1;
     letter-spacing: 0.5px;
+    font-family: "Playfair Display", serif;
 }
 
 h2 {
     font-size: 2rem;
     line-height: 1.15;
+    font-family: "Playfair Display", serif;
+    font-weight: 500;
 }
 
 h3 {
     font-size: 1.1rem;
     line-height: 1.2;
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
 }
 
 p {
@@ -101,26 +108,6 @@ p {
     );
 
     z-index: -1;
-}
-
-.work {
-    padding: var(--space-5) var(--space-3);
-}
-
-.contact {
-    background: var(--teal);
-    color: #fff;
-    padding: var(--space-5);
-    padding-bottom: 0;
-}
-
-.contact-text h2 {
-    margin-bottom: var(--space-2);
-}
-
-.contact p,
-.contact li {
-    color: #fff;
 }
 
 .header-grid {    
@@ -153,19 +140,42 @@ p {
 }
 
 .about-card {
-    background: var(--paper);
-    box-shadow: var(--shadow);
-    padding: var(--space-4);
+    padding-top: var(--space-3);
+    width: min(400px, 80vw);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .about-card p {
-    margin-top: var(--space-2);
+    margin-top: var(--space-3);
 }
 
 .social-row {
     display: flex;
-    gap: var(--space-2);
+    gap: var(--space-3);
     margin-top: var(--space-3);
+}
+
+.social-row a {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+}
+
+.social-row a:hover {
+    opacity: 0.5;
+}
+
+.work {
+    padding: var(--space-5) var(--space-3);
+    padding-bottom: 5rem;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .projects-grid {
@@ -189,7 +199,6 @@ p {
     display: grid;
     place-items: center;
 
-    font-size: 1.75rem;
     color: #fff;
 }
 
@@ -203,19 +212,55 @@ p {
     justify-content: space-between;
 }
 
+.project-title {
+    padding-left: 0.5rem;
+}
+
 .project-links {
     display: flex;
     gap: var(--space-2);
+}
+
+.project-links a {
+    display: inline-flex;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.project-links a:hover {
+    opacity: 0.5;
 }
 
 .project-desc {
     margin-top: var(--space-2);
 }
 
+.contact {
+    background: var(--teal);
+    color: #fff;
+    padding: var(--space-5) var(--space-3);
+    padding-bottom: 0;
+}
+
 .contact-grid {
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
+    gap: var(--space-5);
+}
+
+.contact-text h2 {
+    text-align: center;
+    margin-bottom: var(--space-4);
+}
+
+.contact-text p:nth-of-type(1){
+    font-size: 1.25rem;
+    line-height: 1.25;
+}
+
+.contact p,
+.contact li {
+    color: #fff;
 }
 
 .contact-address {
@@ -226,6 +271,26 @@ p {
     list-style: none;
     padding: 0;
     margin: var(--space-3) 0;
+}
+
+.contact-list li {
+    display: flex;
+    gap: .5em;
+    align-items: center;
+    padding: .3em 0;
+}
+
+.contact-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #fff;
+    fill: currentColor;
+}
+
+.contact .social-row {
+    margin-top: var(--space-5);
+    justify-self: center;
+    color: black;
 }
 
 .contact-media {
@@ -240,6 +305,21 @@ p {
 }
 
 @media (min-width: 768px) {
+    .about-card {
+        background: var(--paper);
+        box-shadow: var(--shadow);
+        padding: var(--space-4);
+    }
+
+    .work {
+        padding: var(--space-5);
+        padding-bottom: 7rem;
+    }
+
+    .container h2 {
+        align-self: flex-start;
+    }
+
     .contact {
         padding-bottom: var(--space-5);
     }
@@ -251,6 +331,15 @@ p {
 
     .contact-text {
         flex: 1;
+    }
+
+    .contact-text h2 {
+        text-align: start;
+        margin-bottom: var(--space-3);
+    }
+
+    .contact .social-row {
+        justify-self: flex-start;
     }
 
     .contact-media {
@@ -265,16 +354,20 @@ p {
 
 @media (min-width: 768px) and (max-width: 1023px) {
     .hero-photo,
-    .social-row {
+    .site-header .social-row {
         display: none;
     }
 
     .about-card {
         display: flow-root;
         position: relative;
-        max-width: 600px;
+        width: 72vw;
         margin: 6rem auto 0;
-        padding: 3.5rem var(--space-4);
+        padding: 5rem var(--space-5);
+    }
+
+    .about-card p {
+        line-height: 1.75;
     }
 
     .hero-photo-tablet {
@@ -287,18 +380,18 @@ p {
 
         box-shadow: var(--shadow);
 
-        margin: -150px 25px 20px -72px;
+        margin: -150px 25px 20px -100px;
     }
     
     .hero-name {
-        inset: 2.5rem auto auto 5rem;
+        inset: 3.3rem auto auto 5rem;
         font-size: 3rem;
         z-index: 1;
     }
 
     .projects-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: var(--space-4);
+        gap: var(--space-5);
     }
 }
 
@@ -322,7 +415,7 @@ p {
 
     .hero-photo {
         width: 100%;
-        height: 400px;
+        height: 420px;
         object-fit: cover;
         object-position: center;
     }
@@ -341,7 +434,7 @@ p {
         transform: translateX(-55px);
     }
 
-    .social-row {
+    .site-header .social-row {
         align-self: flex-end;
     }
 }
