@@ -136,3 +136,29 @@ const GameController = (() => {
         getCurrentPlayer,
     };
 })();
+
+const displayController = (() => {
+    const boardElement = document.getElementById("board");
+
+    const renderBoard = () => {
+        const board = Gameboard.getBoard();
+        boardElement.innerHTML = "";
+
+        for (let row = 0; row < Gameboard.SIZE; row += 1) {
+            for (let col = 0; col < Gameboard.SIZE; col += 1) {
+                const cell = document.createElement("button");
+                cell.classList.add("cell");
+                cell.dataset.row = row;
+                cell.dataset.col = col;
+                cell.textContent = board[row][col] ?? "";
+                boardElement.appendChild(cell);
+            }
+        }
+    };
+
+    return {
+        renderBoard
+    };
+})();
+
+displayController.renderBoard();
