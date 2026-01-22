@@ -62,3 +62,48 @@ addBookToLibrary('The Myth of Normal', 'Gabor Mate', 576, true);
 addBookToLibrary('Why We Sleep', 'Matthew Walker', 368, false);
 
 renderLibrary();
+
+const newBookBtn = document.getElementById('new-book-btn');
+const dialog = document.getElementById('book-dialog');
+const form = document.getElementById('book-form');
+const closeBtn = document.getElementById('close-dialog');
+const cancelBtn = document.getElementById('cancel-dialog');
+
+function openDialog() {
+    if (typeof dialog.showModal === 'function') {
+        dialog.showModal();
+        form.querySelector('#title').focus();
+    } else {
+        dialog.setAttribute('open', '');
+        form.querySelector('#title').focus();
+    }
+}
+
+function closeDialog() {
+    form.reset();
+    if (typeof dialog.close === 'function') dialog.close();
+    else dialog.removeAttribute('open');
+}
+
+newBookBtn.addEventListener('click', openDialog);
+closeBtn.addEventListener('click', closeDialog);
+cancelBtn.addEventListener('click', closeDialog);
+
+dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) closeDialog();
+});
+
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const title = form.querySelector('#title').value.trim();
+    const author = form.querySelector('#author').value.trim();
+    const pages = Number(form.querySelector('#pages').value);
+    const isRead = form.querySelector('#is-read').checked;
+
+    if (!title || !author || !Number.isFinite(pages) || pages < 1) return;
+
+    addBookToLibrary(title, author, pages, isRead);
+    renderLibrary();
+    closeDialog;
+});

@@ -13,7 +13,45 @@
     <section class="library" aria-label="Library">
         <header class="library-header">
             <h1 class="library-title">Library</h1>
-            <button class="btn" type="button">New Book</button>
+            <button class="btn" id="new-book-btn" type="button">New Book</button>
+
+            <dialog class="book-dialog" id="book-dialog" aria-label="Add a new book">
+                <form class="book-form" id="book-form" method="dialog">
+                    <header class="dialog-header">
+                        <h2 class="dialog-title">Add book</h2>
+                        <button class="icon-btn" id="close-dialog" type="button" aria-label="Close">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+                            </svg>
+                        </button>
+                    </header>
+
+                    <div class="form-row">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="title" autocomplete="off" required>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="author">Author</label>
+                        <input type="text" id="author" name="author" autocomplete="off" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <label for="pages">Pages</label>
+                        <input type="number" min="1" id="pages" name="pages" required>
+                    </div>
+
+                    <label class="checkbox">
+                        <input type="checkbox" id="is-read" name="isRead">
+                        Read
+                    </label>
+
+                    <div class="dialog-actions">
+                        <button class="btn" value="confirm" type="submit">Add</button>
+                        <button class="btn cancel-btn" value="cancel" type="button" id="cancel-dialog">Cancel</button>
+                    </div>
+                </form>
+            </dialog>
         </header>
 
         <div class="table-wrap">
