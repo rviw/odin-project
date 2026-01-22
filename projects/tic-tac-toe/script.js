@@ -157,7 +157,14 @@ const displayController = (() => {
 
     const player1Input = document.getElementById("player1");
     const player2Input = document.getElementById("player2");
+
+    let hasStarted = false;
+
     const startBtn = document.getElementById("startBtn");
+
+    const updateStartButtonText = () => {
+        startBtn.textContent = hasStarted ? "Restart" : "Start";
+    };
 
     const setStatus = (text) => {
         statusElement.textContent = text;
@@ -186,6 +193,11 @@ const displayController = (() => {
     };
 
     const handleBoardClick = (event) => {
+        if (!hasStarted) {
+            setStatus("Enter names and press Start.");
+            return;
+        }
+
         const target = event.target;
         if (!(target instanceof HTMLButtonElement)) return;
         if (!target.classList.contains("cell")) return;
@@ -220,7 +232,11 @@ const displayController = (() => {
         const name2 = player2Input.value.trim() || "Player 2";
 
         GameController.setPlayerNames(name1, name2);
-        GameController.reset()
+        GameController.reset();
+
+        hasStarted = true;
+        updateStartButtonText();
+
         renderBoard();
         updateTurnStatus();
     }
@@ -228,8 +244,9 @@ const displayController = (() => {
     const init = () => {
         boardElement.addEventListener("click", handleBoardClick);
         startBtn.addEventListener("click", handleStart);
-        
-        handleStart();
+
+        GameController.reset();
+        renderBoard();
     };
 
     return {
