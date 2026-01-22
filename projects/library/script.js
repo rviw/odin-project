@@ -42,6 +42,11 @@ function renderLibrary() {
         const statusWrap = document.createElement('span');
         statusWrap.classList.add('status');
         statusWrap.dataset.read = String(book.isRead);
+        statusWrap.dataset.action = 'toggle-read';
+        statusWrap.setAttribute(
+            'aria-label',
+            book.isRead ? 'Mark as unread' : 'Mark as read'
+        );
 
         const dot = document.createElement('span');
         dot.classList.add('status-dot');
@@ -131,15 +136,22 @@ function removeBookFromLibraryById(id) {
 }
 
 libraryBody.addEventListener('click', (event) => {
-    const button = event.target.closest('button[data-action]');
-    if (!button) return;
+    const actionEl = event.target.closest('[data-action]');
+    if (!actionEl) return;
 
-    const row = button.closest('tr[data-id]');
+    const row = actionEl.closest('tr[data-id]');
     if (!row) return;
 
     const id = row.dataset.id;
+    const book = myLibrary.find((b) => b.id === id);
+    if (!book) return;
 
-    if (button.dataset.action === 'remove') {
+    if (actionEl.dataset.action === 'toggle-read') {
+        book.toggleRead();
+        renderLibrary();
+    }
+
+    if (actionEl.dataset.action === 'remove') {
         removeBookFromLibraryById(id);
         renderLibrary();
     }

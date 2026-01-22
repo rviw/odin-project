@@ -103,6 +103,11 @@ h6 {
     align-items: center;
     gap: 8px;
     white-space: nowrap;
+    cursor: pointer;
+}
+
+.status:hover {
+    opacity: 0.7;
 }
 
 .status-dot {
