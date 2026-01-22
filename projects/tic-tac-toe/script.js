@@ -139,6 +139,11 @@ const GameController = (() => {
 
 const displayController = (() => {
     const boardElement = document.getElementById("board");
+    const statusElement = document.getElementById("status");
+
+    const setStatus = (text) => {
+        statusElement.textContent = text;
+    }
 
     const renderBoard = () => {
         const board = Gameboard.getBoard();
@@ -147,18 +152,57 @@ const displayController = (() => {
         for (let row = 0; row < Gameboard.SIZE; row += 1) {
             for (let col = 0; col < Gameboard.SIZE; col += 1) {
                 const cell = document.createElement("button");
+                cell.type = "button";
                 cell.classList.add("cell");
-                cell.dataset.row = row;
-                cell.dataset.col = col;
+                cell.dataset.row = String(row);
+                cell.dataset.col = String(col);
                 cell.textContent = board[row][col] ?? "";
                 boardElement.appendChild(cell);
             }
         }
     };
 
+    const handleBoardClick = (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLButtonElement)) return;
+        if (!target.classList.contains("cell")) return;
+
+        const row = Number(target.dataset.row);
+        const col = Number(target.dataset.col);
+
+        const result = GameController.playRound(row, col);
+
+        if (!result.ok) {
+            setStatus(result.reason);
+            return;
+        }
+
+        renderBoard();
+
+        if (result.status === "win") {
+            setStatus(`${result.winner.name} wins.`);
+            return;
+        }
+
+        if (result.status === "tie") {
+            setStatus("It's a tie.");
+            return;
+        }
+
+        setStatus(`${result.nextPlayer.name}'s turn (${result.nextPlayer.mark}).`);
+    };
+
+    const init = () => {
+        boardElement.addEventListener("click", handleBoardClick);
+        GameController.reset();
+        renderBoard();
+        const current = GameController.getCurrentPlayer();
+        setStatus(`${current.name}'s turn (${current.mark}).`);
+    };
+
     return {
-        renderBoard
+        init
     };
 })();
 
-displayController.renderBoard();
+displayController.init();
