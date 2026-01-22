@@ -8,6 +8,10 @@ function Book(id, title, author, pages, isRead) {
     this.isRead = isRead;
 }
 
+Book.prototype.toggleRead = function () {
+    this.isRead = !this.isRead;
+};
+
 function addBookToLibrary(title, author, pages, isRead) {
     const id = crypto.randomUUID();
     const newBook = new Book(id, title, author, pages, isRead);
