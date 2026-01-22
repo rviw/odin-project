@@ -126,7 +126,7 @@ form.addEventListener('submit', (event) => {
 
     addBookToLibrary(title, author, pages, isRead);
     renderLibrary();
-    closeDialog;
+    closeDialog();
 });
 
 function removeBookFromLibraryById(id) {
