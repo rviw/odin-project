@@ -43,15 +43,28 @@ const Gameboard = (() => {
 })();
 
 const Player = (name, mark) => {
+    let playerName = name;
+
+    const getName = () => playerName;
+    const setName = (newName) => {
+        playerName = newName;
+    };
+
     return {
-        name,
         mark,
+        getName,
+        setName,
     };
 };
 
 const GameController = (() => {
     const player1 = Player("Player 1", "O");
     const player2 = Player("Player 2", "X");
+
+    const setPlayerNames = (name1, name2) => {
+        player1.setName(name1);
+        player2.setName(name2);
+    };
 
     let currentPlayer = player1;
     let isGameOver = false;
@@ -131,6 +144,7 @@ const GameController = (() => {
     };
 
     return {
+        setPlayerNames,
         playRound,
         reset,
         getCurrentPlayer,
@@ -140,6 +154,10 @@ const GameController = (() => {
 const displayController = (() => {
     const boardElement = document.getElementById("board");
     const statusElement = document.getElementById("status");
+
+    const player1Input = document.getElementById("player1");
+    const player2Input = document.getElementById("player2");
+    const startBtn = document.getElementById("startBtn");
 
     const setStatus = (text) => {
         statusElement.textContent = text;
@@ -162,6 +180,11 @@ const displayController = (() => {
         }
     };
 
+    const updateTurnStatus = () => {
+        const current = GameController.getCurrentPlayer();
+        setStatus(`${current.getName()}'s turn (${current.mark}).`);
+    };
+
     const handleBoardClick = (event) => {
         const target = event.target;
         if (!(target instanceof HTMLButtonElement)) return;
@@ -180,7 +203,7 @@ const displayController = (() => {
         renderBoard();
 
         if (result.status === "win") {
-            setStatus(`${result.winner.name} wins.`);
+            setStatus(`${result.winner.getName()} wins.`);
             return;
         }
 
@@ -189,15 +212,24 @@ const displayController = (() => {
             return;
         }
 
-        setStatus(`${result.nextPlayer.name}'s turn (${result.nextPlayer.mark}).`);
+        setStatus(`${result.nextPlayer.getName()}'s turn (${result.nextPlayer.mark}).`);
     };
+
+    const handleStart = () => {
+        const name1 = player1Input.value.trim() || "Player 1";
+        const name2 = player2Input.value.trim() || "Player 2";
+
+        GameController.setPlayerNames(name1, name2);
+        GameController.reset()
+        renderBoard();
+        updateTurnStatus();
+    }
 
     const init = () => {
         boardElement.addEventListener("click", handleBoardClick);
-        GameController.reset();
-        renderBoard();
-        const current = GameController.getCurrentPlayer();
-        setStatus(`${current.name}'s turn (${current.mark}).`);
+        startBtn.addEventListener("click", handleStart);
+        
+        handleStart();
     };
 
     return {

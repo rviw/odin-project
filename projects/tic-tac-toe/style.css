@@ -52,6 +52,31 @@ h6 {
     text-wrap: balance;
 }
 
+.controls {
+    display: grid;
+    gap: 12px;
+    width: 240px;
+    margin: 12px 0;
+}
+
+.field {
+    display: grid;
+    gap: 6px;
+}
+
+label {
+    font-size: 0.9rem;
+}
+
+input {
+    padding: 6px 8px;
+}
+
+#startBtn {
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
 #board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
