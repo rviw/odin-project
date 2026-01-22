@@ -41,3 +41,98 @@ const Gameboard = (() => {
         reset,
     };
 })();
+
+const Player = (name, mark) => {
+    return {
+        name,
+        mark,
+    };
+};
+
+const GameController = (() => {
+    const player1 = Player("Player 1", "O");
+    const player2 = Player("Player 2", "X");
+
+    let currentPlayer = player1;
+    let isGameOver = false;
+
+    const switchTurn = () => {
+        currentPlayer = currentPlayer === player1 ? player2 : player1;
+    };
+
+    const getCurrentPlayer = () => currentPlayer;
+
+    const checkWinner = (mark) => {
+        const b = Gameboard.getBoard();
+
+        for (let r = 0; r < Gameboard.SIZE; r += 1) {
+            if (
+                b[r][0] === mark &&
+                b[r][1] === mark &&
+                b[r][2] === mark
+            ) return true;
+        }
+
+        for (let c = 0; c < Gameboard.SIZE; c += 1) {
+            if (b[0][c] === mark &&
+                b[1][c] === mark &&
+                b[2][c] === mark
+            ) return true;
+        }
+
+        if (b[0][0] === mark &&
+            b[1][1] === mark &&
+            b[2][2] === mark
+        ) return true;
+
+        if (b[0][2] === mark &&
+            b[1][1] === mark &&
+            b[2][0] === mark
+        ) return true;
+
+        return false;
+    };
+
+    const checkTie = () => {
+        const b = Gameboard.getBoard();
+        return b.flat().every((cell) => cell !== null);
+    };
+
+    const playRound = (row, col) => {
+        if (isGameOver) {
+            return { ok: false, reason: "Game is over." };
+        }
+
+        const mark = currentPlayer.mark;
+        const placed = Gameboard.placeMark(row, col, mark);
+
+        if (!placed) {
+            return { ok: false, reason: "Invalid move." };
+        }
+
+        if (checkWinner(mark)) {
+            isGameOver = true;
+            return { ok: true, status: "win", winner: currentPlayer };
+        }
+
+        if (checkTie()) {
+            isGameOver = true;
+            return { ok: true, status: "tie" };
+        }
+
+        switchTurn();
+        return { ok: true, status: "continue", nextPlayer: currentPlayer };
+    };
+
+    const reset = () => {
+        Gameboard.reset();
+        currentPlayer = player1;
+        isGameOver = false;
+    };
+
+    return {
+        playRound,
+        reset,
+        getCurrentPlayer,
+    };
+})();
