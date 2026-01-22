@@ -10,6 +10,26 @@
 <body>
     <a href="../../index.html">Projects</a>
 
-    <h1>Library</h1>
+    <section class="library" aria-label="Library">
+        <header class="library-header">
+            <h1 class="library-title">Library</h1>
+            <button class="btn" type="button">New Book</button>
+        </header>
+
+        <div class="table-wrap">
+            <table class="book-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th class="col-num">Pages</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="library"></tbody>
+            </table>
+        </div>
+    </section>
 </body>
 </html>
