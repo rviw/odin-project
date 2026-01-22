@@ -53,7 +53,23 @@ function renderLibrary() {
         statusWrap.append(dot, label);
         statusCell.appendChild(statusWrap);
 
-        row.append(titleCell, authorCell, pagesCell, statusCell);
+        const actionsCell = document.createElement('td');
+        actionsCell.classList.add('table-actions');
+
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.classList.add('action-btn');
+        removeBtn.dataset.action = 'remove';
+        removeBtn.innerHTML = `
+          <svg viewBox="0 0 24 24">
+            <path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" />
+          </svg>
+        `;
+        removeBtn.setAttribute('aria-label', 'Remove book');
+
+        actionsCell.appendChild(removeBtn);
+
+        row.append(titleCell, authorCell, pagesCell, statusCell, actionsCell);
         libraryBody.appendChild(row);
     });
 }
@@ -106,4 +122,25 @@ form.addEventListener('submit', (event) => {
     addBookToLibrary(title, author, pages, isRead);
     renderLibrary();
     closeDialog;
+});
+
+function removeBookFromLibraryById(id) {
+    const index = myLibrary.findIndex((book) => book.id === id);
+    if (index === -1) return;
+    myLibrary.splice(index, 1);
+}
+
+libraryBody.addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-action]');
+    if (!button) return;
+
+    const row = button.closest('tr[data-id]');
+    if (!row) return;
+
+    const id = row.dataset.id;
+
+    if (button.dataset.action === 'remove') {
+        removeBookFromLibraryById(id);
+        renderLibrary();
+    }
 });
